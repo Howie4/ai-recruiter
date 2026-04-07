@@ -3,588 +3,530 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 招聘助手 — Claude AI 驱动的智能招聘自动化工具</title>
+<title>AI 招聘助手 — 智能、安全的自动化招聘工具</title>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
-  font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
-  background: #0A0E1A;
-  color: #E8ECF8;
+  font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #07090F;
+  color: #E2E8F8;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 a { text-decoration: none; color: inherit; }
+
 :root {
-  --blue:      #1B6FEB;
-  --blue-lt:   #3B8EFF;
-  --blue-d:    #0F4FC4;
-  --gold:      #F5C842;
-  --purple:    #7C5CFC;
-  --teal:      #0ECAB8;
-  --green:     #22C55E;
-  --surface:   rgba(255,255,255,0.04);
-  --border:    rgba(255,255,255,0.08);
-  --text1:     #F0F4FF;
-  --text2:     #9DA8CC;
-  --text3:     #5A6480;
-  --radius:    16px;
-  --radius-sm: 10px;
+  --blue:    #2B7FFF;
+  --blue-lt: #5B9FFF;
+  --blue-d:  #1055CC;
+  --purple:  #7C5CFC;
+  --green:   #22C55E;
+  --border:  rgba(255,255,255,0.07);
+  --surface: rgba(255,255,255,0.04);
+  --t1: #F0F4FF;
+  --t2: #8A96BC;
+  --t3: #464E6A;
 }
 
-/* ── HEADER ── */
-header {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  padding: 16px 48px;
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 99;
+  height: 60px;
   display: flex; align-items: center; justify-content: space-between;
-  background: rgba(10,14,26,0.82);
-  backdrop-filter: blur(20px);
+  padding: 0 40px;
+  background: rgba(7,9,15,0.85);
+  backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
 }
-.logo { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 700; color: var(--text1); }
-.logo-icon {
-  width: 32px; height: 32px;
-  background: linear-gradient(135deg, var(--blue-lt), var(--blue-d));
-  border-radius: 9px;
-  display: flex; align-items: center; justify-content: center; font-size: 16px;
+.nav-logo { display: flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 700; color: var(--t1); }
+.nav-logo-mark {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-d));
+  display: flex; align-items: center; justify-content: center; font-size: 14px;
 }
-nav { display: flex; gap: 28px; align-items: center; }
-nav a { font-size: 14px; color: var(--text2); transition: color 0.2s; }
-nav a:hover { color: var(--text1); }
-.btn-nav {
-  padding: 8px 20px; background: var(--blue);
-  color: #fff; font-size: 14px; font-weight: 600; border-radius: 8px;
-  transition: background 0.2s, transform 0.15s;
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links a { font-size: 13.5px; color: var(--t2); transition: color .2s; }
+.nav-links a:hover { color: var(--t1); }
+.nav-cta {
+  padding: 7px 18px; background: var(--blue); color: #fff;
+  font-size: 13.5px; font-weight: 600; border-radius: 7px;
+  transition: background .2s, transform .15s;
 }
-.btn-nav:hover { background: var(--blue-lt); transform: translateY(-1px); }
+.nav-cta:hover { background: var(--blue-lt); transform: translateY(-1px); }
 
 /* ── HERO ── */
 .hero {
-  min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 120px 24px 80px; position: relative; overflow: hidden; text-align: center;
-}
-.hero-bg { position: absolute; inset: 0; pointer-events: none; }
-.hero-orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35; }
-.hero-orb-1 { width: 600px; height: 600px; top: -100px; left: -150px; background: radial-gradient(circle, #1B6FEB, transparent 70%); }
-.hero-orb-2 { width: 500px; height: 500px; bottom: -80px; right: -120px; background: radial-gradient(circle, #7C5CFC, transparent 70%); }
-.hero-orb-3 { width: 300px; height: 300px; top: 40%; left: 50%; transform: translate(-50%,-50%); background: radial-gradient(circle, #0ECAB8, transparent 70%); opacity: 0.15; }
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 7px; padding: 6px 16px;
-  background: rgba(27,111,235,0.15); border: 1px solid rgba(27,111,235,0.3);
-  border-radius: 999px; font-size: 13px; color: #7BAEFF; margin-bottom: 28px; letter-spacing: 0.3px;
-}
-.hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue-lt); animation: pulse-dot 2s infinite; }
-@keyframes pulse-dot { 0%, 100% { opacity:1; transform:scale(1); } 50% { opacity:0.5; transform:scale(0.7); } }
-.hero h1 { font-size: clamp(40px, 6vw, 72px); font-weight: 900; line-height: 1.1; letter-spacing: -1.5px; color: var(--text1); max-width: 900px; }
-.hero h1 .grad { background: linear-gradient(135deg, #60A5FA, #A78BFA, #34D399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.hero-sub { margin-top: 20px; font-size: clamp(16px, 2.2vw, 20px); color: var(--text2); max-width: 640px; line-height: 1.7; }
-.hero-cta { margin-top: 40px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; justify-content: center; }
-.btn-primary {
-  padding: 14px 32px; background: var(--blue); color: #fff; font-size: 16px; font-weight: 700;
-  border-radius: 12px; display: flex; align-items: center; gap: 8px; transition: all 0.2s;
-  box-shadow: 0 8px 32px rgba(27,111,235,0.4);
-}
-.btn-primary:hover { background: var(--blue-lt); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(27,111,235,0.5); }
-.btn-ghost {
-  padding: 14px 28px; border: 1.5px solid var(--border); color: var(--text2);
-  font-size: 16px; font-weight: 600; border-radius: 12px; transition: all 0.2s;
-}
-.btn-ghost:hover { border-color: rgba(255,255,255,0.2); color: var(--text1); background: var(--surface); }
-.hero-stats { margin-top: 60px; display: flex; gap: 48px; align-items: center; justify-content: center; flex-wrap: wrap; }
-.stat-item { text-align: center; }
-.stat-num { font-size: 36px; font-weight: 900; background: linear-gradient(135deg, #60A5FA, #A78BFA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.1; }
-.stat-label { font-size: 13px; color: var(--text3); margin-top: 4px; }
-.stat-divider { width: 1px; height: 40px; background: var(--border); }
-
-/* ── DOWNLOAD SECTION ── */
-.download-section {
-  padding: 80px 24px;
-  background: linear-gradient(180deg, #060910 0%, #0A0E1A 100%);
-}
-.download-grid {
-  max-width: 900px; margin: 48px auto 0;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
-}
-@media (max-width: 700px) { .download-grid { grid-template-columns: 1fr; } }
-
-.download-card {
+  min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 100px 24px 80px;
   position: relative; overflow: hidden;
-  border-radius: 20px;
-  padding: 32px;
-  display: flex; flex-direction: column; gap: 20px;
 }
-.download-card.boss-card {
-  background: linear-gradient(135deg, rgba(27,111,235,0.12), rgba(15,79,196,0.06));
-  border: 1px solid rgba(27,111,235,0.25);
+.hero::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 20%, rgba(43,127,255,0.12), transparent),
+    radial-gradient(ellipse 60% 50% at 80% 80%, rgba(124,92,252,0.10), transparent);
 }
-.download-card.maimai-card {
-  background: linear-gradient(135deg, rgba(124,92,252,0.12), rgba(90,60,196,0.06));
-  border: 1px solid rgba(124,92,252,0.25);
-}
-.dl-header { display: flex; align-items: center; gap: 14px; }
-.dl-icon {
-  width: 52px; height: 52px; border-radius: 14px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 24px; font-weight: 900; color: #fff; flex-shrink: 0;
-}
-.dl-icon.boss   { background: linear-gradient(135deg, #1B6FEB, #0F4FC4); }
-.dl-icon.maimai { background: linear-gradient(135deg, #7C5CFC, #5A3CC4); }
-.dl-info .dl-name { font-size: 18px; font-weight: 800; color: var(--text1); }
-.dl-info .dl-platform { font-size: 13px; color: var(--text2); margin-top: 2px; }
-.dl-desc { font-size: 14px; color: var(--text2); line-height: 1.65; }
-
-.btn-download {
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  padding: 14px 24px;
-  border-radius: 12px; font-size: 15px; font-weight: 700;
-  cursor: pointer; transition: all 0.2s; border: none;
-  text-decoration: none;
-}
-.btn-download.boss-dl {
-  background: linear-gradient(135deg, #1B6FEB, #0F4FC4);
-  color: #fff;
-  box-shadow: 0 6px 24px rgba(27,111,235,0.35);
-}
-.btn-download.boss-dl:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(27,111,235,0.5); }
-.btn-download.maimai-dl {
-  background: linear-gradient(135deg, #7C5CFC, #5A3CC4);
-  color: #fff;
-  box-shadow: 0 6px 24px rgba(124,92,252,0.35);
-}
-.btn-download.maimai-dl:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(124,92,252,0.5); }
-
-.dl-size { font-size: 12px; color: var(--text3); text-align: center; margin-top: -10px; }
-
-/* 安装步骤 */
-.install-guide {
-  max-width: 700px; margin: 48px auto 0;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border);
-  border-radius: 16px; padding: 28px 32px;
-}
-.install-title {
-  font-size: 14px; font-weight: 700; color: var(--text2);
-  letter-spacing: 0.5px; text-transform: uppercase;
-  margin-bottom: 18px; display: flex; align-items: center; gap: 8px;
-}
-.install-steps { display: flex; flex-direction: column; gap: 12px; }
-.install-step {
-  display: flex; gap: 14px; align-items: flex-start;
-}
-.step-n {
-  width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
-  background: rgba(27,111,235,0.2); border: 1px solid rgba(27,111,235,0.3);
-  color: #7BAEFF; font-size: 12px; font-weight: 700;
-  display: flex; align-items: center; justify-content: center; margin-top: 1px;
-}
-.step-text { font-size: 14px; color: var(--text2); line-height: 1.6; }
-.step-text b { color: var(--text1); }
-.step-text code {
-  font-family: monospace; background: rgba(255,255,255,0.08);
-  padding: 1px 6px; border-radius: 4px; font-size: 12.5px; color: #60A5FA;
-}
-
-/* ── SECTION COMMON ── */
-section { padding: 100px 24px; }
-.container { max-width: 1160px; margin: 0 auto; }
-.section-label {
+.hero-eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
-  font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--blue-lt); margin-bottom: 14px;
+  padding: 5px 14px;
+  border: 1px solid rgba(43,127,255,0.3);
+  background: rgba(43,127,255,0.08);
+  border-radius: 999px; font-size: 12.5px; color: #7BAEFF;
+  margin-bottom: 28px; letter-spacing: 0.4px;
 }
-.section-label::before { content: ''; width: 20px; height: 2px; background: var(--blue); }
-.section-title { font-size: clamp(28px, 4vw, 44px); font-weight: 900; letter-spacing: -1px; color: var(--text1); line-height: 1.15; margin-bottom: 16px; }
-.section-sub { font-size: 17px; color: var(--text2); line-height: 1.7; max-width: 560px; }
+.live-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--blue-lt);
+  animation: blink 2s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+.hero h1 {
+  font-size: clamp(38px, 5.5vw, 68px);
+  font-weight: 900; letter-spacing: -2px; line-height: 1.08;
+  color: var(--t1); max-width: 820px;
+}
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 60%, #34D399 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-sub {
+  margin-top: 22px; font-size: 18px; color: var(--t2);
+  line-height: 1.75; max-width: 580px;
+}
+.hero-actions {
+  margin-top: 44px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+}
+.btn-main {
+  padding: 14px 36px; background: var(--blue); color: #fff;
+  font-size: 15px; font-weight: 700; border-radius: 10px;
+  display: inline-flex; align-items: center; gap: 8px;
+  box-shadow: 0 8px 28px rgba(43,127,255,0.35);
+  transition: all .2s;
+}
+.btn-main:hover { background: var(--blue-lt); transform: translateY(-2px); box-shadow: 0 12px 36px rgba(43,127,255,0.45); }
+.btn-line {
+  padding: 14px 28px;
+  border: 1px solid var(--border); color: var(--t2);
+  font-size: 15px; font-weight: 500; border-radius: 10px;
+  transition: all .2s;
+}
+.btn-line:hover { border-color: rgba(255,255,255,0.18); color: var(--t1); }
+
+.hero-kpi {
+  margin-top: 64px; display: flex; gap: 0; border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden; background: var(--surface);
+}
+.kpi-item {
+  flex: 1; padding: 20px 28px; text-align: center;
+  border-right: 1px solid var(--border);
+}
+.kpi-item:last-child { border-right: none; }
+.kpi-num { font-size: 28px; font-weight: 900; color: var(--t1); letter-spacing: -1px; }
+.kpi-label { font-size: 12px; color: var(--t3); margin-top: 3px; }
+
+/* ── TRUST ── */
+.trust { padding: 100px 24px; }
+.container { max-width: 1080px; margin: 0 auto; }
+.label {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 11px; font-weight: 700; letter-spacing: 1.8px;
+  text-transform: uppercase; color: var(--blue-lt); margin-bottom: 12px;
+}
+.label::before { content:''; width:16px; height:1.5px; background:var(--blue); }
+.section-h { font-size: clamp(26px, 3.5vw, 40px); font-weight: 900; letter-spacing: -1px; color: var(--t1); line-height: 1.15; margin-bottom: 14px; }
+.section-p { font-size: 16px; color: var(--t2); line-height: 1.75; max-width: 520px; }
+
+.trust-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  margin-top: 52px;
+}
+@media(max-width:780px){ .trust-grid { grid-template-columns:1fr 1fr; } }
+@media(max-width:480px){ .trust-grid { grid-template-columns:1fr; } }
+
+.trust-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 26px 24px;
+  transition: border-color .25s, transform .25s;
+}
+.trust-card:hover { border-color: rgba(43,127,255,0.25); transform: translateY(-2px); }
+.trust-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; margin-bottom: 14px;
+  background: rgba(43,127,255,0.1);
+}
+.trust-title { font-size: 14.5px; font-weight: 700; color: var(--t1); margin-bottom: 7px; }
+.trust-desc  { font-size: 13px; color: var(--t2); line-height: 1.7; }
 
 /* ── PRODUCTS ── */
-.products-bg { background: #060910; }
-.products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 56px; }
-@media (max-width: 800px) { .products-grid { grid-template-columns: 1fr; } }
-.product-card {
-  position: relative; overflow: hidden; background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border); border-radius: 24px; padding: 40px;
-  transition: transform 0.3s, border-color 0.3s;
+.products { padding: 100px 24px; background: #050709; }
+.product-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 52px;
 }
-.product-card:hover { transform: translateY(-4px); }
-.product-card.boss:hover  { border-color: rgba(27,111,235,0.4); }
-.product-card.maimai:hover { border-color: rgba(124,92,252,0.4); }
-.product-card-glow {
-  position: absolute; top: -60px; right: -60px;
-  width: 220px; height: 220px; border-radius: 50%; filter: blur(60px); opacity: 0.2; pointer-events: none;
+@media(max-width:760px){ .product-row { grid-template-columns:1fr; } }
+
+.prod-card {
+  border-radius: 18px; padding: 36px;
+  border: 1px solid var(--border);
+  position: relative; overflow: hidden;
+  transition: border-color .25s, transform .25s;
 }
-.boss .product-card-glow   { background: var(--blue); }
-.maimai .product-card-glow { background: var(--purple); }
-.product-platform { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; }
-.platform-badge { padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; }
-.boss .platform-badge   { background: rgba(27,111,235,0.15); color: #60A5FA; border: 1px solid rgba(27,111,235,0.25); }
-.maimai .platform-badge { background: rgba(124,92,252,0.15); color: #A78BFA; border: 1px solid rgba(124,92,252,0.25); }
-.product-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; }
-.boss .product-icon   { background: linear-gradient(135deg, #1B6FEB, #0F4FC4); }
-.maimai .product-icon { background: linear-gradient(135deg, #7C5CFC, #5A3CC4); }
-.product-name { font-size: 24px; font-weight: 800; color: var(--text1); letter-spacing: -0.5px; margin-bottom: 8px; }
-.product-desc { font-size: 15px; color: var(--text2); line-height: 1.7; margin-bottom: 28px; }
-.product-modes { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
-.mode-tag { padding: 5px 12px; border-radius: 6px; font-size: 12.5px; font-weight: 600; background: var(--surface); border: 1px solid var(--border); color: var(--text2); }
-.product-features { display: flex; flex-direction: column; gap: 10px; }
-.feature-item { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--text2); line-height: 1.5; }
-.feature-check { flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; margin-top: 1px; }
-.boss .feature-check   { background: rgba(27,111,235,0.2); color: #60A5FA; }
-.maimai .feature-check { background: rgba(124,92,252,0.2); color: #A78BFA; }
+.prod-card:hover { transform: translateY(-3px); }
+.prod-card.b { background: linear-gradient(160deg, rgba(43,127,255,0.08), rgba(7,9,15,0)); }
+.prod-card.b:hover { border-color: rgba(43,127,255,0.3); }
+.prod-card.m { background: linear-gradient(160deg, rgba(124,92,252,0.08), rgba(7,9,15,0)); }
+.prod-card.m:hover { border-color: rgba(124,92,252,0.3); }
 
-/* ── HOW IT WORKS ── */
-.how-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-top: 56px; position: relative; }
-@media (max-width: 900px) { .how-steps { grid-template-columns: 1fr 1fr; gap: 24px; } }
-@media (max-width: 500px)  { .how-steps { grid-template-columns: 1fr; } }
-.how-connector { position: absolute; top: 32px; left: 10%; right: 10%; height: 1px; background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent); }
-@media (max-width: 900px) { .how-connector { display: none; } }
-.step-card { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 12px; }
-.step-num { width: 64px; height: 64px; border-radius: 50%; background: var(--surface); border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 18px; position: relative; z-index: 1; transition: border-color 0.3s; }
-.step-card:hover .step-num { border-color: rgba(27,111,235,0.4); }
-.step-title { font-size: 14px; font-weight: 700; color: var(--text1); margin-bottom: 6px; }
-.step-desc  { font-size: 13px; color: var(--text3); line-height: 1.6; }
+.prod-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-bottom: 22px;
+}
+.prod-logo {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 900; color: #fff;
+}
+.prod-logo.b { background: linear-gradient(135deg, #2B7FFF, #1055CC); }
+.prod-logo.m { background: linear-gradient(135deg, #7C5CFC, #5A3CC4); }
+.prod-plat { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 5px; }
+.prod-plat.b { background: rgba(43,127,255,0.12); color: #7BAEFF; }
+.prod-plat.m { background: rgba(124,92,252,0.12); color: #A78BFA; }
 
-/* ── FEATURES ── */
-.features-bg { background: #060910; }
-.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 56px; }
-@media (max-width: 900px) { .features-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 560px)  { .features-grid { grid-template-columns: 1fr; } }
-.feat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; transition: all 0.25s; }
-.feat-card:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); transform: translateY(-2px); }
-.feat-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px; }
-.feat-icon.blue   { background: rgba(27,111,235,0.15); }
-.feat-icon.purple { background: rgba(124,92,252,0.15); }
-.feat-icon.teal   { background: rgba(14,202,184,0.15); }
-.feat-icon.gold   { background: rgba(245,200,66,0.15); }
-.feat-icon.green  { background: rgba(34,197,94,0.15); }
-.feat-icon.pink   { background: rgba(236,72,153,0.15); }
-.feat-title { font-size: 15px; font-weight: 700; color: var(--text1); margin-bottom: 8px; }
-.feat-desc  { font-size: 13.5px; color: var(--text2); line-height: 1.65; }
+.prod-name { font-size: 20px; font-weight: 800; color: var(--t1); margin-bottom: 10px; letter-spacing: -0.3px; }
+.prod-desc { font-size: 14px; color: var(--t2); line-height: 1.7; margin-bottom: 22px; }
 
-/* ── AI ENGINE ── */
-.ai-section { background: linear-gradient(135deg, rgba(27,111,235,0.07), rgba(124,92,252,0.07)); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.ai-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-@media (max-width: 800px) { .ai-inner { grid-template-columns: 1fr; gap: 40px; } }
-.ai-models { display: flex; flex-direction: column; gap: 12px; margin-top: 32px; }
-.model-row { display: flex; align-items: center; gap: 14px; padding: 14px 18px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: var(--radius-sm); transition: border-color 0.2s; cursor: default; }
-.model-row:hover { border-color: rgba(27,111,235,0.3); }
-.model-name { font-size: 14px; font-weight: 600; color: var(--text1); flex: 1; }
-.model-tag  { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; }
-.model-tag.rec { background: rgba(34,197,94,0.15); color: #4ADE80; }
-.model-tag.alt { background: rgba(27,111,235,0.12); color: #7BAEFF; }
-.ai-visual { position: relative; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 20px; padding: 28px; overflow: hidden; }
-.ai-visual-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); margin-bottom: 18px; }
-.eval-result { display: flex; flex-direction: column; gap: 12px; }
-.eval-row { display: flex; align-items: center; gap: 12px; }
-.eval-label { font-size: 13px; color: var(--text2); width: 70px; flex-shrink: 0; }
-.eval-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden; }
-.eval-fill { height: 100%; border-radius: 3px; animation: grow 1.5s ease-out forwards; }
-@keyframes grow { from { width: 0; } }
-.eval-fill.blue   { background: linear-gradient(90deg, var(--blue), var(--blue-lt)); }
-.eval-fill.purple { background: linear-gradient(90deg, var(--purple), #A78BFA); }
-.eval-fill.green  { background: linear-gradient(90deg, #16A34A, var(--green)); }
-.eval-fill.gold   { background: linear-gradient(90deg, #CA8A04, var(--gold)); }
-.eval-score { font-size: 13px; font-weight: 700; color: var(--text1); width: 36px; text-align: right; }
-.eval-verdict { margin-top: 16px; padding: 14px 16px; background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); border-radius: 10px; }
-.verdict-label { font-size: 11px; color: var(--text3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
-.verdict-text { font-size: 13px; color: #4ADE80; line-height: 1.5; }
+.prod-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 24px; }
+.tag { font-size: 12px; color: var(--t2); background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 5px; padding: 3px 10px; }
+
+.prod-feats { display: flex; flex-direction: column; gap: 9px; }
+.feat { display: flex; gap: 9px; font-size: 13.5px; color: var(--t2); align-items: flex-start; line-height: 1.5; }
+.feat-dot { flex-shrink:0; margin-top:5px; width:5px; height:5px; border-radius:50%; }
+.feat-dot.b { background: var(--blue-lt); }
+.feat-dot.m { background: #A78BFA; }
+
+/* ── HOW ── */
+.how { padding: 100px 24px; }
+.how-row {
+  display: flex; gap: 0; margin-top: 52px;
+  border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+}
+@media(max-width:700px){ .how-row { flex-direction:column; } }
+.how-step {
+  flex: 1; padding: 30px 24px;
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  transition: background .2s;
+}
+.how-step:last-child { border-right: none; }
+.how-step:hover { background: var(--surface); }
+.how-n {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid var(--border); background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; margin-bottom: 14px;
+}
+.how-t { font-size: 13.5px; font-weight: 700; color: var(--t1); margin-bottom: 5px; }
+.how-d { font-size: 12.5px; color: var(--t3); line-height: 1.6; }
+
+/* ── DOWNLOAD ── */
+.download { padding: 100px 24px; background: #050709; }
+.dl-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 52px;
+  max-width: 800px; margin-left: auto; margin-right: auto;
+}
+@media(max-width:640px){ .dl-row { grid-template-columns:1fr; } }
+
+.dl-card {
+  border-radius: 16px; padding: 28px;
+  display: flex; flex-direction: column; gap: 18px;
+}
+.dl-card.b {
+  background: linear-gradient(135deg, rgba(43,127,255,0.1), rgba(16,85,204,0.05));
+  border: 1px solid rgba(43,127,255,0.2);
+}
+.dl-card.m {
+  background: linear-gradient(135deg, rgba(124,92,252,0.1), rgba(90,60,196,0.05));
+  border: 1px solid rgba(124,92,252,0.2);
+}
+.dl-head { display: flex; align-items: center; gap: 12px; }
+.dl-logo {
+  width: 46px; height: 46px; border-radius: 12px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 900; color: #fff;
+}
+.dl-logo.b { background: linear-gradient(135deg, #2B7FFF, #1055CC); }
+.dl-logo.m { background: linear-gradient(135deg, #7C5CFC, #5A3CC4); }
+.dl-name { font-size: 16px; font-weight: 800; color: var(--t1); }
+.dl-plat { font-size: 12px; color: var(--t2); margin-top: 1px; }
+.dl-desc { font-size: 13.5px; color: var(--t2); line-height: 1.65; }
+
+.btn-dl {
+  display: flex; align-items: center; justify-content: center; gap: 9px;
+  padding: 13px; border-radius: 10px;
+  font-size: 14px; font-weight: 700; color: #fff;
+  transition: all .2s;
+}
+.btn-dl.b { background: linear-gradient(135deg, #2B7FFF, #1055CC); box-shadow: 0 6px 20px rgba(43,127,255,0.3); }
+.btn-dl.b:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(43,127,255,0.45); }
+.btn-dl.m { background: linear-gradient(135deg, #7C5CFC, #5A3CC4); box-shadow: 0 6px 20px rgba(124,92,252,0.3); }
+.btn-dl.m:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(124,92,252,0.45); }
+.dl-size { font-size: 12px; color: var(--t3); text-align: center; }
+
+/* 安装步骤 */
+.install-box {
+  max-width: 600px; margin: 36px auto 0;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px 28px;
+}
+.install-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--t3); margin-bottom: 16px;
+}
+.install-steps { display: flex; flex-direction: column; gap: 11px; }
+.i-step { display: flex; gap: 12px; align-items: flex-start; }
+.i-n {
+  flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%;
+  background: rgba(43,127,255,0.15); color: #7BAEFF;
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; margin-top: 1px;
+}
+.i-text { font-size: 13.5px; color: var(--t2); line-height: 1.6; }
+.i-text b { color: var(--t1); }
+.i-text code { font-family: monospace; background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 4px; color: #7BAEFF; font-size: 12px; }
 
 /* ── FOOTER ── */
-footer { padding: 48px 24px; border-top: 1px solid var(--border); text-align: center; }
-.footer-logo { font-size: 18px; font-weight: 800; color: var(--text1); margin-bottom: 10px; }
-.footer-sub  { font-size: 13px; color: var(--text3); }
+footer {
+  padding: 40px 24px; border-top: 1px solid var(--border);
+  text-align: center;
+}
+.footer-logo { font-size: 15px; font-weight: 700; color: var(--t1); margin-bottom: 8px; }
+.footer-note { font-size: 12.5px; color: var(--t3); line-height: 1.7; }
 
-/* ── 动画 ── */
-.fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
-.fade-up.visible { opacity: 1; transform: translateY(0); }
-.glow-border { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: linear-gradient(135deg, rgba(27,111,235,0.3), rgba(124,92,252,0.2), transparent 60%); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask-composite: xor; -webkit-mask-composite: xor; padding: 1px; }
+/* ── ANIMATION ── */
+.fade { opacity:0; transform:translateY(24px); transition: opacity .55s ease, transform .55s ease; }
+.fade.in { opacity:1; transform:translateY(0); }
 </style>
 </head>
 <body>
 
-<!-- ── HEADER ── -->
-<header>
-  <div class="logo">
-    <div class="logo-icon">🤖</div>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-mark">🤖</div>
     AI 招聘助手
   </div>
-  <nav>
-    <a href="#download">下载</a>
+  <div class="nav-links">
+    <a href="#trust">安全可信</a>
     <a href="#products">产品介绍</a>
-    <a href="#howitworks">使用流程</a>
-    <a href="#features">核心功能</a>
-    <a href="#download" class="btn-nav">立即下载</a>
-  </nav>
-</header>
+    <a href="#download">下载</a>
+    <a href="#download" class="nav-cta">立即下载</a>
+  </div>
+</nav>
 
-<!-- ── HERO ── -->
+<!-- HERO -->
 <section class="hero">
-  <div class="hero-bg">
-    <div class="hero-orb hero-orb-1"></div>
-    <div class="hero-orb hero-orb-2"></div>
-    <div class="hero-orb hero-orb-3"></div>
+  <div class="hero-eyebrow">
+    <span class="live-dot"></span>
+    Claude AI 驱动 · 本地运行 · 数据不出浏览器
   </div>
-  <div class="hero-badge">
-    <span class="hero-badge-dot"></span>
-    Claude AI 驱动 · 智能招聘自动化
-  </div>
-  <h1>让 AI 替你<br><span class="grad">找到最合适的候选人</span></h1>
+  <h1>让 AI 替你筛选候选人<br><em>安全、可靠、全自动</em></h1>
   <p class="hero-sub">
-    两款 Chrome 扩展，覆盖 Boss直聘 和 脉脉两大招聘平台。<br>
-    自动搜索 → AI 评估匹配度 → 智能发送邀请，一键解放 HR 双手。
+    覆盖 Boss直聘 和 脉脉两大平台。<br>
+    自动搜索、AI 精准评估、智能发送邀请——你只需查看匹配结果。
   </p>
-  <div class="hero-cta">
-    <a href="#download" class="btn-primary">⬇️ 免费下载</a>
-    <a href="#howitworks" class="btn-ghost">查看使用流程 →</a>
+  <div class="hero-actions">
+    <a href="#download" class="btn-main">⬇ 免费下载</a>
+    <a href="#trust" class="btn-line">为什么值得信赖 →</a>
   </div>
-  <div class="hero-stats">
-    <div class="stat-item"><div class="stat-num">2</div><div class="stat-label">主流平台覆盖</div></div>
-    <div class="stat-divider"></div>
-    <div class="stat-item"><div class="stat-num">全自动</div><div class="stat-label">候选人筛选流程</div></div>
-    <div class="stat-divider"></div>
-    <div class="stat-item"><div class="stat-num">7+</div><div class="stat-label">支持 AI 模型</div></div>
-    <div class="stat-divider"></div>
-    <div class="stat-item"><div class="stat-num">0</div><div class="stat-label">需要手动操作</div></div>
+  <div class="hero-kpi">
+    <div class="kpi-item"><div class="kpi-num">2</div><div class="kpi-label">平台覆盖</div></div>
+    <div class="kpi-item"><div class="kpi-num">0</div><div class="kpi-label">数据上传服务器</div></div>
+    <div class="kpi-item"><div class="kpi-num">7+</div><div class="kpi-label">支持 AI 模型</div></div>
+    <div class="kpi-item"><div class="kpi-num">全自动</div><div class="kpi-label">候选人筛选</div></div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════
-     ⬇️  下载区块
-═══════════════════════════════════════════════ -->
-<section class="download-section" id="download">
+<!-- TRUST -->
+<section class="trust" id="trust">
   <div class="container">
-    <div class="fade-up" style="text-align:center;">
-      <div class="section-label" style="justify-content:center;">立即使用</div>
-      <h2 class="section-title">下载 Chrome 扩展</h2>
-      <p class="section-sub" style="margin:0 auto;">选择你正在使用的招聘平台，下载对应的 AI 招聘助手，安装后即可开始使用。</p>
+    <div class="fade">
+      <div class="label">安全可信</div>
+      <h2 class="section-h">为什么值得信赖？</h2>
+      <p class="section-p">我们在设计上就把安全放在第一位：候选人数据永远不会离开你的浏览器，没有后台服务器，没有账号注册，没有任何隐藏风险。</p>
     </div>
+    <div class="trust-grid fade">
+      <div class="trust-card">
+        <div class="trust-icon">🔒</div>
+        <div class="trust-title">数据不出你的浏览器</div>
+        <div class="trust-desc">扩展完全在本地运行，候选人简历信息只在你的 Chrome 内处理，不经过任何第三方服务器存储或转发。</div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">⚡</div>
+        <div class="trust-title">直连 AI，无中间商</div>
+        <div class="trust-desc">AI 评估请求直接从你的浏览器发到 Claude/GPT 等大模型 API，全程加密，没有任何中间层截获你的数据。</div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">🕵️</div>
+        <div class="trust-title">无需注册，无需授权</div>
+        <div class="trust-desc">不需要创建账号、不需要绑定手机、不需要授权任何平台权限。下载安装，填写配置，即可使用。</div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">📖</div>
+        <div class="trust-title">源码透明可审阅</div>
+        <div class="trust-desc">Chrome 扩展的代码可以随时打开查看，没有混淆、没有后门。你可以清楚地知道程序在做什么，不做什么。</div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">🛡️</div>
+        <div class="trust-title">Manifest V3 安全标准</div>
+        <div class="trust-desc">采用 Chrome 最新的 MV3 扩展规范，权限最小化声明，严格遵循浏览器沙箱机制，比旧版扩展更安全。</div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">🎭</div>
+        <div class="trust-title">拟人操作，降低封号风险</div>
+        <div class="trust-desc">内置随机打字延迟、阅读停顿、定期休息等行为模拟机制，操作节奏贴近真人，有效降低被平台识别的风险。</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <div class="download-grid fade-up">
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="container">
+    <div class="fade">
+      <div class="label">两款产品</div>
+      <h2 class="section-h">覆盖主流招聘平台</h2>
+      <p class="section-p">针对 Boss直聘 和 脉脉 各自的平台特点，分别定制了专属的自动化流程。</p>
+    </div>
+    <div class="product-row fade">
 
-      <!-- Boss AI -->
-      <div class="download-card boss-card">
-        <div class="dl-header">
-          <div class="dl-icon boss">B</div>
-          <div class="dl-info">
-            <div class="dl-name">Boss AI 招聘助手</div>
-            <div class="dl-platform">适用于 Boss直聘 · zhipin.com</div>
-          </div>
+      <div class="prod-card b">
+        <div class="prod-badge">
+          <div class="prod-logo b">B</div>
+          <span class="prod-plat b">Boss直聘</span>
         </div>
-        <p class="dl-desc">支持「推荐牛人」和「搜索」两种模式，Claude AI 自动评估候选人匹配度，一键批量打招呼。</p>
-        <a href="boss-ai.zip" download="Boss AI招聘助手.zip" class="btn-download boss-dl">
-          ⬇  下载 Boss AI 招聘助手
-        </a>
-        <p class="dl-size">ZIP 约 70 KB · Chrome 扩展（需手动加载）</p>
+        <div class="prod-name">Boss AI 招聘助手</div>
+        <div class="prod-desc">在 Boss直聘 实现全自动招聘，支持「推荐牛人」和「搜索」两种模式，AI 智能打分，自动打招呼。</div>
+        <div class="prod-tags">
+          <span class="tag">👥 推荐牛人模式</span>
+          <span class="tag">🔍 搜索筛选模式</span>
+          <span class="tag">多岗位轮换</span>
+        </div>
+        <div class="prod-feats">
+          <div class="feat"><span class="feat-dot b"></span>自动遍历候选人列表，逐一读取简历</div>
+          <div class="feat"><span class="feat-dot b"></span>Claude AI 精准打分（0~100），附匹配理由</div>
+          <div class="feat"><span class="feat-dot b"></span>匹配后自动打招呼，不匹配自动跳过</div>
+          <div class="feat"><span class="feat-dot b"></span>实时状态浮窗，进度一目了然</div>
+        </div>
       </div>
 
-      <!-- 脉脉 AI -->
-      <div class="download-card maimai-card">
-        <div class="dl-header">
-          <div class="dl-icon maimai">M</div>
-          <div class="dl-info">
-            <div class="dl-name">脉脉 AI 招聘助手</div>
-            <div class="dl-platform">适用于 脉脉 · maimai.cn</div>
-          </div>
+      <div class="prod-card m">
+        <div class="prod-badge">
+          <div class="prod-logo m">M</div>
+          <span class="prod-plat m">脉脉</span>
         </div>
-        <p class="dl-desc">覆盖人脉搜索和企业招聘两种模式，AI 自动筛选、发消息或加好友，多关键词批量处理。</p>
-        <a href="maimai-ai.zip" download="脉脉AI招聘助手.zip" class="btn-download maimai-dl">
-          ⬇  下载脉脉 AI 招聘助手
-        </a>
-        <p class="dl-size">ZIP 约 109 KB · Chrome 扩展（需手动加载）</p>
+        <div class="prod-name">脉脉 AI 招聘助手</div>
+        <div class="prod-desc">在脉脉平台实现端到端自动化，支持发消息和加好友两种方式，AI 个性化话术，多岗位无上限循环。</div>
+        <div class="prod-tags">
+          <span class="tag">👥 人脉搜索模式</span>
+          <span class="tag">🏢 企业招聘搜索</span>
+          <span class="tag">多关键词批量</span>
+        </div>
+        <div class="prod-feats">
+          <div class="feat"><span class="feat-dot m"></span>自动跨页导航，稳定处理 React SPA</div>
+          <div class="feat"><span class="feat-dot m"></span>支持「发消息」和「加好友附言」两种触达</div>
+          <div class="feat"><span class="feat-dot m"></span>AI 个性化话术，{name}/{reason} 动态填充</div>
+          <div class="feat"><span class="feat-dot m"></span>8 维筛选条件：学历/年限/公司/关键词等</div>
+        </div>
       </div>
 
     </div>
+  </div>
+</section>
 
-    <!-- 安装指南 -->
-    <div class="install-guide fade-up" style="transition-delay:.1s">
-      <div class="install-title">📦 安装步骤（约 1 分钟）</div>
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="fade" style="text-align:center;">
+      <div class="label" style="justify-content:center;">使用流程</div>
+      <h2 class="section-h">五步，全程自动</h2>
+    </div>
+    <div class="how-row fade">
+      <div class="how-step"><div class="how-n">📥</div><div class="how-t">下载安装</div><div class="how-d">下载 ZIP，加载到 Chrome</div></div>
+      <div class="how-step"><div class="how-n">💼</div><div class="how-t">配置岗位</div><div class="how-d">填写 JD 和筛选条件</div></div>
+      <div class="how-step"><div class="how-n">🚀</div><div class="how-t">一键启动</div><div class="how-d">点开始，AI 全程接管</div></div>
+      <div class="how-step"><div class="how-n">🤖</div><div class="how-t">AI 评估</div><div class="how-d">逐一打分，精准筛选</div></div>
+      <div class="how-step"><div class="how-n">✅</div><div class="how-t">查看结果</div><div class="how-d">人选 Tab 直接查阅</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DOWNLOAD -->
+<section class="download" id="download">
+  <div class="container">
+    <div class="fade" style="text-align:center;">
+      <div class="label" style="justify-content:center;">立即使用</div>
+      <h2 class="section-h">选择你的平台，免费下载</h2>
+      <p class="section-p" style="margin:0 auto;">下载对应的扩展文件，按下方步骤安装，整个过程不超过 2 分钟。</p>
+    </div>
+
+    <div class="dl-row fade">
+      <div class="dl-card b">
+        <div class="dl-head">
+          <div class="dl-logo b">B</div>
+          <div><div class="dl-name">Boss AI 招聘助手</div><div class="dl-plat">适用于 Boss直聘 · zhipin.com</div></div>
+        </div>
+        <div class="dl-desc">推荐牛人 + 搜索双模式，Claude AI 自动评估匹配度，一键批量打招呼。</div>
+        <a href="boss-ai.zip" download="Boss AI招聘助手.zip" class="btn-dl b">⬇ 下载 Boss AI 招聘助手</a>
+        <div class="dl-size">ZIP · 约 70 KB</div>
+      </div>
+      <div class="dl-card m">
+        <div class="dl-head">
+          <div class="dl-logo m">M</div>
+          <div><div class="dl-name">脉脉 AI 招聘助手</div><div class="dl-plat">适用于 脉脉 · maimai.cn</div></div>
+        </div>
+        <div class="dl-desc">人脉搜索 + 企业招聘双模式，AI 筛选、发消息、加好友全自动。</div>
+        <a href="maimai-ai.zip" download="脉脉AI招聘助手.zip" class="btn-dl m">⬇ 下载脉脉 AI 招聘助手</a>
+        <div class="dl-size">ZIP · 约 109 KB</div>
+      </div>
+    </div>
+
+    <div class="install-box fade">
+      <div class="install-label">📦 安装步骤（约 2 分钟）</div>
       <div class="install-steps">
-        <div class="install-step">
-          <div class="step-n">1</div>
-          <div class="step-text">点击上方按钮下载 ZIP 文件，<b>解压</b>到任意文件夹（如桌面）</div>
-        </div>
-        <div class="install-step">
-          <div class="step-n">2</div>
-          <div class="step-text">打开 Chrome 浏览器，地址栏输入 <code>chrome://extensions</code> 并回车</div>
-        </div>
-        <div class="install-step">
-          <div class="step-n">3</div>
-          <div class="step-text">打开右上角<b>「开发者模式」</b>开关</div>
-        </div>
-        <div class="install-step">
-          <div class="step-n">4</div>
-          <div class="step-text">点击<b>「加载已解压的扩展程序」</b>，选择刚才解压出来的文件夹</div>
-        </div>
-        <div class="install-step">
-          <div class="step-n">5</div>
-          <div class="step-text">扩展安装成功！打开对应招聘平台，点击浏览器右上角的扩展图标即可开始配置使用</div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ── PRODUCTS ── -->
-<section class="products-bg" id="products">
-  <div class="container">
-    <div class="fade-up">
-      <div class="section-label">两款产品</div>
-      <h2 class="section-title">覆盖主流招聘平台</h2>
-      <p class="section-sub">无论是 Boss直聘 还是 脉脉，都有专属的 AI 招聘助手帮你高效找到合适候选人。</p>
-    </div>
-    <div class="products-grid">
-      <div class="product-card boss fade-up">
-        <div class="glow-border"></div>
-        <div class="product-card-glow"></div>
-        <div class="product-platform">
-          <div class="product-icon">B</div>
-          <span class="platform-badge">Boss直聘</span>
-        </div>
-        <h3 class="product-name">Boss AI 招聘助手</h3>
-        <p class="product-desc">在 Boss直聘平台实现全自动化招聘：支持「推荐牛人」和「搜索」两种模式，AI 智能评估候选人，自动打招呼建立联系。</p>
-        <div class="product-modes">
-          <span class="mode-tag">👥 推荐牛人模式</span>
-          <span class="mode-tag">🔍 搜索筛选模式</span>
-        </div>
-        <div class="product-features">
-          <div class="feature-item"><div class="feature-check">✓</div>自动遍历推荐候选人列表，逐一读取简历资料</div>
-          <div class="feature-item"><div class="feature-check">✓</div>Claude AI 评估匹配度，精准打分（0~100分）</div>
-          <div class="feature-item"><div class="feature-check">✓</div>匹配后自动点击「打招呼」，一键发起沟通</div>
-          <div class="feature-item"><div class="feature-check">✓</div>支持关键词搜索模式，多关键词组批量处理</div>
-          <div class="feature-item"><div class="feature-check">✓</div>实时状态浮窗，任务进度一目了然</div>
-          <div class="feature-item"><div class="feature-check">✓</div>多岗位轮换，可同时管理多个招聘需求</div>
-        </div>
-      </div>
-      <div class="product-card maimai fade-up" style="transition-delay:.1s">
-        <div class="glow-border"></div>
-        <div class="product-card-glow"></div>
-        <div class="product-platform">
-          <div class="product-icon" style="background:linear-gradient(135deg,#7C5CFC,#5A3CC4);">M</div>
-          <span class="platform-badge">脉脉</span>
-        </div>
-        <h3 class="product-name">脉脉 AI 招聘助手</h3>
-        <p class="product-desc">在脉脉平台实现端到端自动化：自动搜索 → AI 筛选 → 发送招聘消息或加好友附言，全程无需手动干预。</p>
-        <div class="product-modes">
-          <span class="mode-tag">👥 人脉搜索模式</span>
-          <span class="mode-tag">🏢 企业招聘搜索</span>
-        </div>
-        <div class="product-features">
-          <div class="feature-item"><div class="feature-check">✓</div>自动跨页导航，稳定处理 React SPA 路由</div>
-          <div class="feature-item"><div class="feature-check">✓</div>支持「发消息」和「加好友」两种触达方式</div>
-          <div class="feature-item"><div class="feature-check">✓</div>AI 个性化消息模板，{name}/{reason} 动态填充</div>
-          <div class="feature-item"><div class="feature-check">✓</div>8维候选人筛选（学历/年限/公司/关键词等）</div>
-          <div class="feature-item"><div class="feature-check">✓</div>人工行为模拟：打字延迟、阅读停顿、休息周期</div>
-          <div class="feature-item"><div class="feature-check">✓</div>多岗位轮换，每岗位自动限时，循环无上限</div>
-        </div>
+        <div class="i-step"><div class="i-n">1</div><div class="i-text">点击下载按钮，<b>解压</b> ZIP 到任意文件夹（如桌面）</div></div>
+        <div class="i-step"><div class="i-n">2</div><div class="i-text">Chrome 地址栏输入 <code>chrome://extensions</code> 并回车</div></div>
+        <div class="i-step"><div class="i-n">3</div><div class="i-text">打开右上角 <b>「开发者模式」</b> 开关</div></div>
+        <div class="i-step"><div class="i-n">4</div><div class="i-text">点 <b>「加载已解压的扩展程序」</b>，选择解压出来的文件夹</div></div>
+        <div class="i-step"><div class="i-n">5</div><div class="i-text">打开对应招聘平台，点击右上角扩展图标，开始配置使用 🎉</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── HOW IT WORKS ── -->
-<section id="howitworks">
-  <div class="container">
-    <div class="fade-up" style="text-align:center;">
-      <div class="section-label" style="justify-content:center;">使用流程</div>
-      <h2 class="section-title">五步全自动，无需守候</h2>
-      <p class="section-sub" style="margin:0 auto;">安装扩展、配置岗位，点击启动后 AI 全程接管，你只需在人选 Tab 里查看结果。</p>
-    </div>
-    <div class="how-steps fade-up" style="margin-top:64px;">
-      <div class="how-connector"></div>
-      <div class="step-card"><div class="step-num">📥</div><div class="step-title">下载安装</div><div class="step-desc">下载扩展 ZIP，加载到 Chrome 扩展管理页</div></div>
-      <div class="step-card"><div class="step-num">💼</div><div class="step-title">配置岗位</div><div class="step-desc">填写岗位名称、JD、候选人筛选条件和搜索关键词</div></div>
-      <div class="step-card"><div class="step-num">🚀</div><div class="step-title">一键启动</div><div class="step-desc">点击「开始」，AI 自动进入招聘平台开始搜索候选人</div></div>
-      <div class="step-card"><div class="step-num">🤖</div><div class="step-title">AI 评估</div><div class="step-desc">逐一读取候选人简历，Claude AI 打分评估匹配度</div></div>
-      <div class="step-card"><div class="step-num">👋</div><div class="step-title">自动触达</div><div class="step-desc">匹配候选人自动打招呼/发消息，不匹配则跳过继续</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ── FEATURES ── -->
-<section class="features-bg" id="features">
-  <div class="container">
-    <div class="fade-up">
-      <div class="section-label">核心能力</div>
-      <h2 class="section-title">不只是自动点击</h2>
-      <p class="section-sub">内置大量智能策略，让自动化更稳定、更安全、更像真人操作。</p>
-    </div>
-    <div class="features-grid" style="margin-top:48px;">
-      <div class="feat-card fade-up"><div class="feat-icon blue">🧠</div><div class="feat-title">Claude AI 智能评估</div><div class="feat-desc">每位候选人均由 Claude AI 对照 JD 进行多维评估，生成 0~100 分的匹配分数，附带具体理由和亮点。</div></div>
-      <div class="feat-card fade-up" style="transition-delay:.05s"><div class="feat-icon purple">🔍</div><div class="feat-title">多关键词批量搜索</div><div class="feat-desc">配置多组搜索关键词，助手按序自动搜索、切换，覆盖不同技能栈和背景的候选人群。</div></div>
-      <div class="feat-card fade-up" style="transition-delay:.1s"><div class="feat-icon teal">🎭</div><div class="feat-title">拟人化行为模拟</div><div class="feat-desc">随机打字延迟、阅读停顿、定期休息周期，完整模拟真人操作节奏，降低平台风控风险。</div></div>
-      <div class="feat-card fade-up" style="transition-delay:.15s"><div class="feat-icon gold">✉️</div><div class="feat-title">AI 个性化话术</div><div class="feat-desc">消息模板支持 {name}、{reason}、{ai} 等动态变量，AI 可为每位候选人生成专属招聘邀约。</div></div>
-      <div class="feat-card fade-up" style="transition-delay:.2s"><div class="feat-icon green">📊</div><div class="feat-title">实时数据统计</div><div class="feat-desc">处理数、匹配数、已联系数、失败数实时更新，运行日志完整记录，可随时查看人选 Tab。</div></div>
-      <div class="feat-card fade-up" style="transition-delay:.25s"><div class="feat-icon pink">🔄</div><div class="feat-title">多岗位自动轮换</div><div class="feat-desc">支持同时管理多个招聘岗位，每个岗位独立配置，自动限时轮换，无需手动切换。</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ── AI ENGINE ── -->
-<section class="ai-section" id="ai">
-  <div class="container">
-    <div class="ai-inner">
-      <div class="fade-up">
-        <div class="section-label">AI 引擎</div>
-        <h2 class="section-title">支持多家顶级 AI 模型</h2>
-        <p class="section-sub">默认使用 Claude Sonnet，也支持 GPT-4o、Gemini、DeepSeek 等，在配置页一键切换。</p>
-        <div class="ai-models">
-          <div class="model-row"><span style="font-size:18px;">✦</span><span class="model-name">Claude Sonnet（Anthropic）</span><span class="model-tag rec">推荐</span></div>
-          <div class="model-row"><span style="font-size:18px;">⬡</span><span class="model-name">GPT-4o / GPT-4o mini</span><span class="model-tag alt">支持</span></div>
-          <div class="model-row"><span style="font-size:18px;">◈</span><span class="model-name">Gemini 2.0 Flash（Google）</span><span class="model-tag alt">支持</span></div>
-          <div class="model-row"><span style="font-size:18px;">◆</span><span class="model-name">DeepSeek V3 / R1</span><span class="model-tag alt">支持</span></div>
-          <div class="model-row"><span style="font-size:18px;">◇</span><span class="model-name">通义千问（阿里云）/ 豆包</span><span class="model-tag alt">支持</span></div>
-        </div>
-      </div>
-      <div class="fade-up" style="transition-delay:.1s">
-        <div class="ai-visual">
-          <div class="ai-visual-title">AI 评估结果示例</div>
-          <div class="eval-result">
-            <div class="eval-row"><span class="eval-label">技术匹配</span><div class="eval-bar"><div class="eval-fill blue" style="width:91%"></div></div><span class="eval-score">91</span></div>
-            <div class="eval-row"><span class="eval-label">经验年限</span><div class="eval-bar"><div class="eval-fill purple" style="width:85%"></div></div><span class="eval-score">85</span></div>
-            <div class="eval-row"><span class="eval-label">公司背景</span><div class="eval-bar"><div class="eval-fill green" style="width:78%"></div></div><span class="eval-score">78</span></div>
-            <div class="eval-row"><span class="eval-label">学历背景</span><div class="eval-bar"><div class="eval-fill gold" style="width:70%"></div></div><span class="eval-score">70</span></div>
-          </div>
-          <div class="eval-verdict">
-            <div class="verdict-label">综合评估</div>
-            <div class="verdict-text">✅ 综合评分 88分，强烈推荐<br><span style="font-size:12px;color:#86EFAC">候选人有头部互联网公司 5 年 Android 经验，核心技术栈高度吻合。</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── CTA ── -->
-<section>
-  <div class="container" style="text-align:center;">
-    <div class="fade-up" style="padding:48px 40px; background:rgba(27,111,235,0.06); border:1px solid rgba(27,111,235,0.15); border-radius:20px; max-width:680px; margin:0 auto;">
-      <div style="font-size:40px; margin-bottom:16px;">🚀</div>
-      <h3 style="font-size:24px; font-weight:800; color:var(--text1); margin-bottom:10px;">准备好解放双手了吗？</h3>
-      <p style="font-size:15px; color:var(--text2); line-height:1.7; margin-bottom:28px;">只需下载扩展、填写岗位配置，然后点击「开始」——AI 帮你完成剩下的一切。</p>
-      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-        <a href="boss-ai.zip" download="Boss AI招聘助手.zip" class="btn-download boss-dl" style="flex:auto; max-width:220px; text-align:center;">⬇ Boss AI 招聘助手</a>
-        <a href="maimai-ai.zip" download="脉脉AI招聘助手.zip" class="btn-download maimai-dl" style="flex:auto; max-width:220px; text-align:center;">⬇ 脉脉 AI 招聘助手</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── FOOTER ── -->
+<!-- FOOTER -->
 <footer>
   <div class="footer-logo">🤖 AI 招聘助手</div>
-  <p class="footer-sub">Claude AI 驱动 · Boss直聘 + 脉脉 双平台覆盖 · Chrome Extension</p>
-  <p class="footer-sub" style="margin-top:8px;">内部工具，仅供授权使用。请遵守各平台服务条款，合理合规地使用自动化功能。</p>
+  <div class="footer-note">
+    Claude AI 驱动 · 本地运行 · 数据不出浏览器<br>
+    内部工具，仅供授权使用。请遵守各平台服务条款，合理合规地使用自动化功能。
+  </div>
 </footer>
 
 <script>
-const observer = new IntersectionObserver(
-  entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-  { threshold: 0.12 }
+const io = new IntersectionObserver(
+  entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }),
+  { threshold: 0.1 }
 );
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+document.querySelectorAll('.fade').forEach(el => io.observe(el));
+
 window.addEventListener('scroll', () => {
-  document.querySelector('header').style.borderBottomColor =
-    window.scrollY > 60 ? 'rgba(255,255,255,0.1)' : '';
+  document.querySelector('nav').style.borderBottomColor =
+    scrollY > 40 ? 'rgba(255,255,255,0.1)' : '';
 });
 </script>
 </body>
