@@ -307,25 +307,25 @@ nav {
   line-height: 1.8; max-width: 480px;
 }
 .donate-cards {
-  display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
+  display: flex; gap: 28px; justify-content: center; flex-wrap: wrap;
+  align-items: flex-start;
 }
 .donate-card {
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: 18px; padding: 32px 36px;
-  display: flex; flex-direction: column; align-items: center; gap: 18px;
+  border-radius: 20px; padding: 28px 28px 24px;
+  display: flex; flex-direction: column; align-items: center; gap: 20px;
   transition: border-color .25s, transform .25s;
 }
 .donate-card:hover { transform: translateY(-3px); }
 .donate-card.wc:hover { border-color: rgba(7,193,96,0.35); }
 .donate-card.ap:hover { border-color: rgba(22,119,255,0.35); }
 .donate-qr {
-  width: 168px; height: 168px; border-radius: 12px;
-  background: #fff; overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
+  width: 220px; border-radius: 16px; overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
 }
-.donate-qr img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.donate-qr img { width: 100%; height: auto; display: block; }
 .donate-qr-ph {
-  width: 168px; height: 168px; border-radius: 12px;
+  width: 220px; height: 280px; border-radius: 16px;
   border: 2px dashed rgba(255,255,255,0.12);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 8px; color: var(--t3); font-size: 12.5px;
