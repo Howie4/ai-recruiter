@@ -299,6 +299,56 @@ nav {
 .i-text b { color: var(--t1); }
 .i-text code { font-family: monospace; background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 4px; color: #7BAEFF; font-size: 12px; }
 
+/* ── DONATE ── */
+.donate { padding: 100px 24px; }
+.donate-inner { text-align: center; max-width: 720px; margin: 0 auto; }
+.donate-tagline {
+  margin: 14px auto 52px; font-size: 16px; color: var(--t2);
+  line-height: 1.8; max-width: 480px;
+}
+.donate-cards {
+  display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
+}
+.donate-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; padding: 32px 36px;
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+  transition: border-color .25s, transform .25s;
+}
+.donate-card:hover { transform: translateY(-3px); }
+.donate-card.wc:hover { border-color: rgba(7,193,96,0.35); }
+.donate-card.ap:hover { border-color: rgba(22,119,255,0.35); }
+.donate-qr {
+  width: 168px; height: 168px; border-radius: 12px;
+  background: #fff; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.donate-qr img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.donate-qr-ph {
+  width: 168px; height: 168px; border-radius: 12px;
+  border: 2px dashed rgba(255,255,255,0.12);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px; color: var(--t3); font-size: 12.5px;
+}
+.donate-brand {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 15px; font-weight: 700; color: var(--t1);
+}
+.brand-dot { width: 10px; height: 10px; border-radius: 50%; }
+.brand-dot.wc { background: #07C160; }
+.brand-dot.ap { background: #1677FF; }
+.donate-amount {
+  display: flex; gap: 8px;
+}
+.amt {
+  font-size: 12px; padding: 4px 12px; border-radius: 99px;
+  border: 1px solid var(--border); color: var(--t3);
+}
+.donate-note {
+  margin-top: 44px; font-size: 12.5px; color: var(--t3); line-height: 1.8;
+}
+.donate-heart { font-size: 20px; margin-bottom: 6px; }
+
 /* ── FOOTER ── */
 footer {
   padding: 40px 24px; border-top: 1px solid var(--border);
@@ -324,6 +374,7 @@ footer {
     <a href="#trust">安全可信</a>
     <a href="#products">产品介绍</a>
     <a href="#download">下载</a>
+    <a href="#donate">支持开发者</a>
     <a href="#download" class="nav-cta">立即下载</a>
   </div>
 </nav>
@@ -504,6 +555,64 @@ footer {
         <div class="i-step"><div class="i-n">4</div><div class="i-text">点 <b>「加载已解压的扩展程序」</b>，选择解压出来的文件夹</div></div>
         <div class="i-step"><div class="i-n">5</div><div class="i-text">打开对应招聘平台，点击右上角扩展图标，开始配置使用 🎉</div></div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- DONATE -->
+<section class="donate" id="donate">
+  <div class="donate-inner">
+    <div class="fade">
+      <div class="label" style="justify-content:center;">支持开发者</div>
+      <h2 class="section-h">如果这些工具对你有帮助</h2>
+      <p class="donate-tagline">
+        这两款工具完全免费，由个人开发者利用业余时间独立开发和维护。<br>
+        如果它们帮你节省了时间、提升了招聘效率，欢迎请开发者喝杯咖啡 ☕<br>
+        你的支持将鼓励我持续优化、适配新功能。
+      </p>
+    </div>
+    <div class="donate-cards fade">
+
+      <!-- 微信收款码 -->
+      <div class="donate-card wc">
+        <div class="donate-brand">
+          <span class="brand-dot wc"></span>
+          微信支付
+        </div>
+        <!-- 将下方 src 替换为实际微信收款码图片 -->
+        <div class="donate-qr-ph" id="wc-qr">
+          <div style="font-size:32px;">💚</div>
+          <div>微信收款码</div>
+          <div style="font-size:11px;color:var(--t3);">待上传</div>
+        </div>
+        <div class="donate-amount">
+          <span class="amt">扫码支付</span>
+          <span class="amt">金额随意</span>
+        </div>
+      </div>
+
+      <!-- 支付宝收款码 -->
+      <div class="donate-card ap">
+        <div class="donate-brand">
+          <span class="brand-dot ap"></span>
+          支付宝
+        </div>
+        <!-- 将下方 src 替换为实际支付宝收款码图片 -->
+        <div class="donate-qr-ph" id="ap-qr">
+          <div style="font-size:32px;">💙</div>
+          <div>支付宝收款码</div>
+          <div style="font-size:11px;color:var(--t3);">待上传</div>
+        </div>
+        <div class="donate-amount">
+          <span class="amt">扫码支付</span>
+          <span class="amt">金额随意</span>
+        </div>
+      </div>
+
+    </div>
+    <div class="donate-note fade">
+      捐赠完全自愿，不影响工具的正常使用。感谢你的认可与支持 🙏<br>
+      如有功能建议或 Bug 反馈，欢迎通过微信扫码联系。
     </div>
   </div>
 </section>
