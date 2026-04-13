@@ -462,68 +462,126 @@ footer {
    移动端适配（≤ 768px）
 ══════════════════════════════════════════ */
 @media(max-width:768px) {
-  /* 导航 */
-  nav { padding: 0 16px; }
-  .nav-links a:not(.nav-cta) { display: none; }
-  .nav-cta { padding: 6px 14px; font-size: 12.5px; }
-
-  /* Hero */
-  .hero { padding: 88px 20px 60px; min-height: auto; }
-  .hero h1 { font-size: clamp(22px, 6vw, 32px); letter-spacing: -0.5px; }
-  .hero-sub { font-size: 15px; margin-top: 16px; }
-  .hero-actions { margin-top: 28px; flex-direction: column; align-items: center; }
-  .btn-main, .btn-line { width: 100%; max-width: 320px; justify-content: center; }
-  .hero-kpi {
-    flex-wrap: wrap; margin-top: 36px; border-radius: 12px;
+  /* ── 导航：只保留 Logo + 下载按钮 ── */
+  nav {
+    padding: 0 16px;
+    height: 54px;
   }
-  .kpi-item { flex: 1 1 50%; min-width: 0; padding: 16px 12px; }
-  .kpi-item:nth-child(2) { border-right: none; }
-  .kpi-item:nth-child(3) { border-top: 1px solid var(--border); }
-  .kpi-item:last-child { border-top: 1px solid var(--border); }
-  .kpi-num { font-size: 22px; }
+  .nav-links {
+    gap: 0;
+  }
+  /* 隐藏所有非下载按钮的链接 */
+  .nav-links > a { display: none !important; }
+  .nav-links > a.nav-cta {
+    display: inline-flex !important;
+    padding: 6px 14px;
+    font-size: 12.5px;
+    margin-left: 8px;
+  }
 
-  /* Trust */
-  .trust { padding: 64px 16px; }
-  .section-h { font-size: clamp(22px, 5vw, 32px); }
+  /* ── Hero ── */
+  .hero {
+    padding: 80px 18px 56px;
+    min-height: auto;
+  }
+  .hero-eyebrow { font-size: 11.5px; padding: 5px 12px; }
+  .hero h1 {
+    font-size: clamp(22px, 6.5vw, 32px);
+    letter-spacing: -0.5px;
+  }
+  .hero-sub {
+    font-size: 14.5px;
+    margin-top: 16px;
+  }
+  .hero-actions {
+    margin-top: 28px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .btn-main, .btn-line {
+    width: 100%;
+    justify-content: center;
+    padding: 13px 20px;
+  }
+
+  /* ── KPI：2×2 网格 ── */
+  .hero-kpi {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 36px;
+    border-radius: 12px;
+  }
+  .kpi-item {
+    flex: none;
+    padding: 16px 12px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  /* 右列：去掉右边框 */
+  .kpi-item:nth-child(2n) { border-right: none; }
+  /* 最后一行：去掉下边框 */
+  .kpi-item:nth-last-child(-n+2) { border-bottom: none; }
+  .kpi-num { font-size: 22px; white-space: normal; }
+  .kpi-label { font-size: 11.5px; white-space: normal; }
+
+  /* ── 通用 Section 间距 ── */
+  .trust, .how, .donate, .community { padding: 64px 16px; }
+  .products, .download { padding: 64px 16px; }
+  .section-h { font-size: clamp(22px, 5.5vw, 32px); }
   .section-p { font-size: 14px; }
+  .label { margin-bottom: 10px; }
 
-  /* Products */
-  .products { padding: 64px 16px; }
+  /* ── Trust 卡片 ── */
+  .trust-card { padding: 20px 18px; }
+
+  /* ── Products ── */
   .prod-card { padding: 24px 20px; }
   .prod-name { font-size: 17px; }
+  .prod-desc { font-size: 13.5px; }
 
-  /* How */
-  .how { padding: 64px 16px; }
+  /* ── How ── */
   .how-row { border-radius: 12px; }
-  .how-step { padding: 22px 14px; }
+  .how-step { padding: 20px 12px; }
   .how-t { font-size: 12.5px; }
   .how-d { font-size: 11.5px; }
 
-  /* Download */
-  .download { padding: 64px 16px; }
-  .install-box { padding: 20px 16px; }
+  /* ── Download ── */
+  .install-box { padding: 20px 16px; margin-top: 28px; }
 
-  /* Donate */
-  .donate { padding: 64px 16px; }
-  .donate-cards { flex-direction: column; align-items: center; gap: 20px; }
-  .donate-qr { width: 180px; height: 240px; }
+  /* ── Donate ── */
+  .donate-inner { padding: 0; }
+  .donate-cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .donate-card { width: 100%; max-width: 320px; }
+  .donate-qr { width: 180px; height: 240px; margin: 0 auto; }
 
-  /* Community */
-  .community { padding: 64px 16px; }
-  .community-card { padding: 24px 20px; width: 100%; }
+  /* ── Community ── */
+  .community-card {
+    padding: 24px 20px;
+    width: 100%;
+    max-width: 320px;
+    box-sizing: border-box;
+  }
   .community-qr { width: 170px; height: 170px; }
 
-  /* Footer */
+  /* ── Footer ── */
   footer { padding: 28px 16px; }
 }
 
+/* ── 超小屏（≤ 420px） ── */
 @media(max-width:420px) {
   .hero h1 { font-size: 20px; }
   .hero-eyebrow { font-size: 11px; padding: 4px 10px; }
-  .kpi-num { font-size: 18px; }
+  .kpi-num { font-size: 19px; }
+  .kpi-label { font-size: 11px; }
   .prod-tags { gap: 5px; }
   .tag { font-size: 11px; padding: 2px 8px; }
   .feat { font-size: 12.5px; }
+  .donate-qr { width: 160px; height: 210px; }
 }
 </style>
 </head>
