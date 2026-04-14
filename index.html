@@ -149,11 +149,10 @@ nav {
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
 
 .hero h1 {
-  font-size: clamp(24px, 3.2vw, 42px);
-  font-weight: 900; letter-spacing: -1px; line-height: 1.15;
-  color: var(--t1); max-width: 640px;
-  text-wrap: pretty; /* 防止末尾孤字 */
-  overflow-wrap: break-word;
+  font-size: clamp(22px, 2.8vw, 40px);
+  font-weight: 900; letter-spacing: -1px; line-height: 1.2;
+  color: var(--t1);
+  white-space: nowrap; /* 强制单行，不换行 */
 }
 .hero h1 em {
   font-style: normal;
@@ -551,8 +550,9 @@ footer {
 
   .hero-eyebrow { font-size: 11.5px; padding: 5px 12px; }
   .hero h1 {
-    font-size: clamp(22px, 6.5vw, 32px);
-    letter-spacing: -0.5px;
+    white-space: normal;
+    font-size: clamp(18px, 5.5vw, 26px);
+    letter-spacing: -0.3px;
   }
   .hero-sub {
     font-size: 14.5px;
@@ -678,7 +678,9 @@ footer {
       </div>
       <h1>HR 招聘提效神器，<em>AI 全程自动接管</em></h1>
       <p class="hero-sub">
-        在 Boss直聘或脉脉浏览推荐人才、关键词搜索，AI 自动逐份评估打分、精筛匹配候选人，并即时发出个性化招聘邀请建立联系；候选人回应后，AI 进一步读取附件简历深度筛选，锁定最优人选——你只需查看最终结果，推进录用。
+        AI 自动精筛候选人、发出招聘邀请建立联系；<br>
+        候选人回应后，自动读取附件简历深度筛选。<br>
+        全程无需人工干预，你只需查看结果推进录用。
       </p>
       <div class="hero-actions">
         <a href="#download" class="btn-main">⬇ 免费下载</a>
