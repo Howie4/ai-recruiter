@@ -8,8 +8,8 @@
 <link rel="apple-touch-icon" href="logo.svg">
 
 <!-- SEO 基础 -->
-<meta name="description" content="免费 Chrome 扩展，支持 Boss直聘（推荐牛人/搜索/收件箱三模式）和脉脉（人脉搜索/企业招聘）。自动读取附件简历、AI 精准打分、批量发送招聘邀请，支持 Claude / GPT / DeepSeek / 千问 / 豆包等，数据不出浏览器，HR 招聘提效神器。">
-<meta name="keywords" content="AI招聘助手,aizhaopin,ai招聘,Boss直聘自动化,脉脉招聘,AI筛选简历,附件简历自动读取,Chrome扩展,招聘自动化,HR工具,Claude AI,自动打招呼,候选人筛选,智能招聘,招聘神器,HR效率工具,简历筛选工具,自动发消息,批量招聘,候选人去重,断点恢复,招聘提效">
+<meta name="description" content="免费 Chrome 扩展，支持 Boss直聘（推荐牛人/搜索/收件箱三模式）和脉脉（人脉搜索/企业招聘）。自动读取附件简历、AI 精准打分、批量发送招聘邀请，支持 Claude / GPT / DeepSeek / Gemini / 千问 / 豆包等，数据不出浏览器，HR 招聘提效神器。">
+<meta name="keywords" content="AI招聘助手,aizhaopin,ai招聘,Boss直聘自动化,脉脉招聘,AI筛选简历,附件简历自动读取,Chrome扩展,招聘自动化,HR工具,Claude AI,GPT招聘,DeepSeek招聘,Gemini招聘,自动打招呼,候选人筛选,智能招聘,招聘神器,HR效率工具,简历筛选工具,自动发消息,批量招聘,候选人去重,断点恢复,招聘提效">
 <meta name="author" content="Howie">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://aizhaopin123.cn/">
@@ -25,7 +25,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aizhaopin123.cn/">
 <meta property="og:title" content="AI 招聘助手 — Boss直聘 & 脉脉全自动招聘，免费下载">
-<meta property="og:description" content="Claude AI 驱动，自动筛选候选人 + 批量打招呼。支持 Boss直聘 和 脉脉，数据不上传服务器，安全可信赖的 Chrome 扩展。">
+<meta property="og:description" content="Claude / GPT / DeepSeek / Gemini 等多模型驱动，自动筛选候选人 + 批量打招呼。支持 Boss直聘 和 脉脉，数据不上传服务器，安全可信赖的 Chrome 扩展。">
 <meta property="og:image" content="https://aizhaopin123.cn/og-cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -35,7 +35,7 @@
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="AI 招聘助手 — Boss直聘 & 脉脉全自动招聘">
-<meta name="twitter:description" content="Claude AI 驱动，自动筛选候选人 + 批量打招呼，数据不出浏览器，免费下载。">
+<meta name="twitter:description" content="Claude / GPT / DeepSeek / Gemini 等多模型驱动，自动筛选候选人 + 批量打招呼，数据不出浏览器，免费下载。">
 <meta name="twitter:image" content="https://aizhaopin123.cn/og-cover.png">
 
 <!-- 结构化数据（Google 富摘要） -->
@@ -44,7 +44,7 @@
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   "name": "AI 招聘助手",
-  "description": "支持 Boss直聘 和 脉脉的 Chrome 扩展，Claude AI 自动筛选候选人、打分评估、批量发送招聘消息，数据完全本地处理，安全可信赖。",
+  "description": "支持 Boss直聘 和 脉脉的 Chrome 扩展，Claude / GPT / DeepSeek / Gemini 等多模型驱动，自动筛选候选人、打分评估、批量发送招聘消息，数据完全本地处理，安全可信赖。",
   "applicationCategory": "BusinessApplication",
   "operatingSystem": "Chrome",
   "offers": {
@@ -152,6 +152,8 @@ nav {
   font-size: clamp(24px, 3.2vw, 42px);
   font-weight: 900; letter-spacing: -1px; line-height: 1.15;
   color: var(--t1); max-width: 640px;
+  text-wrap: pretty; /* 防止末尾孤字 */
+  overflow-wrap: break-word;
 }
 .hero h1 em {
   font-style: normal;
@@ -672,12 +674,11 @@ footer {
     <div class="hero-left">
       <div class="hero-eyebrow">
         <span class="live-dot"></span>
-        Claude · GPT · DeepSeek · 千问 · 豆包，自由选 · 数据不出浏览器
+        Claude · GPT · DeepSeek · Gemini · 千问 · 豆包，自由选 · 数据不出浏览器
       </div>
-      <h1>HR 招聘提效神器<br><em>AI 自动筛简历、发消息、建联候选人</em></h1>
+      <h1>HR 招聘提效神器<br><em>AI 全自动筛简历、发消息、精准建联</em></h1>
       <p class="hero-sub">
-        覆盖 Boss直聘 和 脉脉两大平台，支持读取附件简历、AI 精准打分、自动发送招聘邀请。<br>
-        你只需查看匹配结果——其余全部交给 AI。
+        选好候选人池，配置岗位 JD 和招聘话术，一键启动。AI 自动逐份读取简历、精准打分，向匹配候选人即时发出个性化招聘邀请，不匹配的直接跳过——你只需坐等候选人回复，推进后续录用。
       </p>
       <div class="hero-actions">
         <a href="#download" class="btn-main">⬇ 免费下载</a>
@@ -730,7 +731,7 @@ footer {
       <div class="trust-card">
         <div class="trust-icon">⚡</div>
         <div class="trust-title">直连 AI，无中间商</div>
-        <div class="trust-desc">AI 评估请求直接从你的浏览器发到大模型 API，支持 Claude、GPT、DeepSeek、千问、豆包等，全程加密，没有任何中间层截获你的数据。</div>
+        <div class="trust-desc">AI 评估请求直接从你的浏览器发到大模型 API，支持 Claude、GPT、DeepSeek、Gemini、千问、豆包等，全程加密，没有任何中间层截获你的数据。</div>
       </div>
       <div class="trust-card">
         <div class="trust-icon">🕵️</div>
@@ -780,7 +781,7 @@ footer {
         </div>
         <div class="prod-feats">
           <div class="feat"><span class="feat-dot b"></span>自动点开附件简历（支持 PDF），AI 逐份评估</div>
-          <div class="feat"><span class="feat-dot b"></span>AI 精准打分（0~100），附详细匹配理由，支持 Claude / GPT / DeepSeek 等</div>
+          <div class="feat"><span class="feat-dot b"></span>AI 精准打分（0~100），附详细匹配理由，支持 Claude / GPT / DeepSeek / Gemini 等</div>
           <div class="feat"><span class="feat-dot b"></span>匹配后自动打招呼，不匹配自动跳过</div>
           <div class="feat"><span class="feat-dot b"></span>操作实时可见：元素高亮闪光 + 步骤进度浮窗</div>
           <div class="feat"><span class="feat-dot b"></span>多岗位轮换，一次启动跑完所有岗位</div>
@@ -844,7 +845,7 @@ footer {
           <div class="dl-logo b">B</div>
           <div><div class="dl-name">Boss AI 招聘助手</div><div class="dl-plat">适用于 Boss直聘 · zhipin.com</div></div>
         </div>
-        <div class="dl-desc">推荐牛人 + 搜索 + 收件箱三模式，自动读取附件简历，AI 打分评估，批量打招呼。支持 Claude / GPT / DeepSeek 等。</div>
+        <div class="dl-desc">推荐牛人 + 搜索 + 收件箱三模式，自动读取附件简历，AI 打分评估，批量打招呼。支持 Claude / GPT / DeepSeek / Gemini 等。</div>
         <a href="boss-ai.zip" download="Boss AI招聘助手.zip" class="btn-dl b">⬇ 下载 Boss AI 招聘助手</a>
         <div class="dl-size">ZIP · 约 694 KB · v6</div>
       </div>
@@ -928,7 +929,7 @@ footer {
 <!-- SEO 文字区（搜索引擎索引用） -->
 <section style="background:#111; padding:40px 24px; border-top:1px solid rgba(255,255,255,0.05);">
   <div style="max-width:800px; margin:0 auto; color:#444; font-size:12px; line-height:2;">
-    <p>AI招聘助手（aizhaopin）是一款免费的 Chrome 浏览器扩展，支持 Boss直聘和脉脉两大招聘平台。Boss版支持推荐牛人、关键词搜索、收件箱三种模式，可自动读取候选人附件简历（含 PDF）；脉脉版支持人脉搜索和企业招聘，候选人自动去重、暂停后可断点恢复。支持接入 Claude、GPT、DeepSeek、千问、豆包等主流 AI 大模型（OpenAI 兼容接口均可），实现简历自动筛选、候选人精准打分（附匹配理由）、批量发送个性化招聘邀请，帮助 HR 和招聘团队大幅提升招聘效率。</p>
+    <p>AI招聘助手（aizhaopin）是一款免费的 Chrome 浏览器扩展，支持 Boss直聘和脉脉两大招聘平台。Boss版支持推荐牛人、关键词搜索、收件箱三种模式，可自动读取候选人附件简历（含 PDF）；脉脉版支持人脉搜索和企业招聘，候选人自动去重、暂停后可断点恢复。支持接入 Claude、GPT、DeepSeek、Gemini、千问、豆包等主流 AI 大模型（OpenAI 兼容接口均可），实现简历自动筛选、候选人精准打分（附匹配理由）、批量发送个性化招聘邀请，帮助 HR 和招聘团队大幅提升招聘效率。</p>
     <p style="margin-top:8px;">关键词：AI招聘 / AI招聘工具 / aizhaopin / Boss直聘自动化 / 脉脉招聘助手 / 附件简历自动读取 / 简历筛选工具 / HR效率工具 / 招聘自动化软件 / 智能招聘助手 / Chrome招聘插件 / 批量打招呼 / 候选人筛选 / 自动发消息 / 候选人去重 / 断点恢复 / 招聘神器</p>
   </div>
 </section>
@@ -937,7 +938,7 @@ footer {
 <footer>
   <div class="footer-logo">🤖 AI 招聘助手</div>
   <div class="footer-note">
-    Claude · GPT · DeepSeek · 千问 · 豆包，自由配置 · 数据不出浏览器<br>
+    Claude · GPT · DeepSeek · Gemini · 千问 · 豆包，自由配置 · 数据不出浏览器<br>
     内部工具，仅供授权使用。请遵守各平台服务条款，合理合规地使用自动化功能。
   </div>
 </footer>
