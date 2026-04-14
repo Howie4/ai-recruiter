@@ -38,13 +38,14 @@
 <meta name="twitter:description" content="Claude / GPT / DeepSeek / Gemini 等多模型驱动，自动筛选候选人 + 批量打招呼，数据不出浏览器，免费下载。">
 <meta name="twitter:image" content="https://aizhaopin123.cn/og-cover.png">
 
-<!-- 结构化数据（Google 富摘要） -->
+<!-- 结构化数据：软件应用 -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   "name": "AI 招聘助手",
-  "description": "支持 Boss直聘 和 脉脉的 Chrome 扩展，Claude / GPT / DeepSeek / Gemini 等多模型驱动，自动筛选候选人、打分评估、批量发送招聘消息，数据完全本地处理，安全可信赖。",
+  "alternateName": ["Boss AI 招聘助手", "脉脉 AI 招聘助手", "aizhaopin"],
+  "description": "支持 Boss直聘 和 脉脉的免费 Chrome 扩展，Claude / GPT / DeepSeek / Gemini 等多模型驱动，自动读取附件简历、AI 精准打分、批量发送招聘邀请，数据完全本地处理，HR 招聘提效神器。",
   "applicationCategory": "BusinessApplication",
   "operatingSystem": "Chrome",
   "offers": {
@@ -57,7 +58,65 @@
     "name": "Howie"
   },
   "url": "https://aizhaopin123.cn/",
-  "keywords": "AI招聘,Boss直聘,脉脉,自动化招聘,Chrome扩展,HR工具"
+  "downloadUrl": "https://aizhaopin123.cn/boss-ai.zip",
+  "keywords": "AI招聘,Boss直聘自动化,脉脉招聘,简历自动筛选,HR工具,Chrome扩展,招聘助手"
+}
+</script>
+<!-- 结构化数据：FAQ（触发 Google 富摘要） -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "AI 招聘助手是什么？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AI 招聘助手是一款免费的 Chrome 浏览器扩展，专为 HR 和招聘团队设计。它能在 Boss直聘和脉脉平台上自动筛选候选人、读取附件简历、AI 智能打分评估，并批量发送个性化招聘邀请，大幅提升招聘效率。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "AI 招聘助手支持哪些招聘平台？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "目前支持两大平台：Boss直聘（推荐牛人、关键词搜索、已获取简历收件箱三种模式）和脉脉（人脉搜索、企业招聘双模式），共五种自动化运作模式。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "支持哪些 AI 模型？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "支持 Claude（Anthropic）、GPT（OpenAI）、DeepSeek、Gemini（Google）、通义千问（阿里）、豆包（字节），以及所有兼容 OpenAI 接口的大模型。使用你自己的 API Key，数据不经过任何中间服务器。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "可以自动读取附件简历吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "可以。在 Boss直聘收件箱模式下，工具会自动点开候选人的附件简历（支持 PDF），提取全文内容交给 AI 做深度分析和匹配评估，无需人工逐一查看。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "使用 AI 招聘助手安全吗？会不会被封号？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "工具内置仿真操作机制：随机延迟、阅读停顿、发送间隔冷却等，模拟真人操作节奏，降低被平台检测的风险。候选人数据完全在本地浏览器内处理，不上传任何服务器。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "AI 招聘助手如何安装？收费吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "完全免费。下载 ZIP 文件后解压，在 Chrome 打开 chrome://extensions，开启「开发者模式」，点「加载已解压的扩展程序」选择解压目录即可。整个安装过程约 2 分钟，无需注册账号。"
+      }
+    }
+  ]
 }
 </script>
 <style>
@@ -408,6 +467,21 @@ nav {
 .i-text code { font-family: monospace; background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 4px; color: #7BAEFF; font-size: 12px; }
 
 /* ── DONATE ── */
+/* ── FAQ ── */
+.faq-list { display: flex; flex-direction: column; gap: 2px; }
+.faq-item {
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  padding: 22px 0;
+}
+.faq-item:last-child { border-bottom: none; }
+.faq-q {
+  font-size: 15px; font-weight: 700; color: var(--t1);
+  margin-bottom: 10px; line-height: 1.5;
+}
+.faq-a {
+  font-size: 13.5px; color: var(--t2); line-height: 1.75;
+}
+
 .donate { padding: 100px 24px; }
 .donate-inner { text-align: center; max-width: 720px; margin: 0 auto; }
 .donate-tagline {
@@ -721,7 +795,7 @@ footer {
   <div class="container">
     <div class="fade">
       <div class="label">安全可信</div>
-      <h2 class="section-h">为什么值得信赖？</h2>
+      <h2 class="section-h">为什么 HR 选择 AI 招聘助手？</h2>
       <p class="section-p">我们在设计上就把安全放在第一位：候选人数据永远不会离开你的浏览器，没有后台服务器，没有账号注册，没有任何隐藏风险。</p>
     </div>
     <div class="trust-grid fade">
@@ -764,8 +838,8 @@ footer {
   <div class="container">
     <div class="fade">
       <div class="label">两款产品</div>
-      <h2 class="section-h">覆盖主流招聘平台</h2>
-      <p class="section-p">针对 Boss直聘 和 脉脉 各自的平台特点，分别定制了专属的自动化流程，共五种运作模式。</p>
+      <h2 class="section-h">Boss直聘 & 脉脉 招聘自动化，五种模式全覆盖</h2>
+      <p class="section-p">针对 Boss直聘 和 脉脉 各自的平台特点，分别定制了专属的自动化流程，自动筛简历、AI 打分、批量发招聘邀请，共五种运作模式。</p>
     </div>
     <div class="product-row fade">
 
@@ -820,7 +894,7 @@ footer {
   <div class="container">
     <div class="fade" style="text-align:center;">
       <div class="label" style="justify-content:center;">使用流程</div>
-      <h2 class="section-h">五步，全程自动</h2>
+      <h2 class="section-h">Boss直聘 自动招聘五步流程，AI 全程接管</h2>
     </div>
     <div class="how-row fade">
       <div class="how-step"><div class="how-n">📥</div><div class="how-t">下载安装</div><div class="how-d">解压 ZIP，2 分钟加载到 Chrome</div></div>
@@ -837,8 +911,8 @@ footer {
   <div class="container">
     <div class="fade" style="text-align:center;">
       <div class="label" style="justify-content:center;">立即使用</div>
-      <h2 class="section-h">选择你的平台，免费下载</h2>
-      <p class="section-p" style="margin:0 auto;">下载对应的扩展文件，按下方步骤安装，整个过程不超过 2 分钟。</p>
+      <h2 class="section-h">免费下载 AI 招聘助手 Chrome 插件，2 分钟完成安装</h2>
+      <p class="section-p" style="margin:0 auto;">下载对应的扩展文件，按下方步骤安装，整个过程不超过 2 分钟，无需注册账号。</p>
     </div>
 
     <div class="dl-row fade">
@@ -928,11 +1002,51 @@ footer {
 </section>
 
 
-<!-- SEO 文字区（搜索引擎索引用） -->
-<section style="background:#111; padding:40px 24px; border-top:1px solid rgba(255,255,255,0.05);">
-  <div style="max-width:800px; margin:0 auto; color:#444; font-size:12px; line-height:2;">
-    <p>AI招聘助手（aizhaopin）是一款免费的 Chrome 浏览器扩展，支持 Boss直聘和脉脉两大招聘平台。Boss版支持推荐牛人、关键词搜索、收件箱三种模式，可自动读取候选人附件简历（含 PDF）；脉脉版支持人脉搜索和企业招聘，候选人自动去重、暂停后可断点恢复。支持接入 Claude、GPT、DeepSeek、Gemini、千问、豆包等主流 AI 大模型（OpenAI 兼容接口均可），实现简历自动筛选、候选人精准打分（附匹配理由）、批量发送个性化招聘邀请，帮助 HR 和招聘团队大幅提升招聘效率。</p>
-    <p style="margin-top:8px;">关键词：AI招聘 / AI招聘工具 / aizhaopin / Boss直聘自动化 / 脉脉招聘助手 / 附件简历自动读取 / 简历筛选工具 / HR效率工具 / 招聘自动化软件 / 智能招聘助手 / Chrome招聘插件 / 批量打招呼 / 候选人筛选 / 自动发消息 / 候选人去重 / 断点恢复 / 招聘神器</p>
+<!-- FAQ -->
+<section id="faq" style="background:#181410; padding:64px 24px; border-top:1px solid rgba(255,255,255,0.06);">
+  <div style="max-width:760px; margin:0 auto;">
+    <div style="text-align:center; margin-bottom:40px;">
+      <div class="label" style="justify-content:center;">常见问题</div>
+      <h2 class="section-h">AI 招聘助手 — 使用答疑</h2>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <h3 class="faq-q">AI 招聘助手是什么？</h3>
+        <p class="faq-a">AI 招聘助手是一款免费的 Chrome 浏览器扩展，专为 HR 和招聘团队设计。它能在 Boss直聘和脉脉平台上自动筛选候选人、读取附件简历、AI 智能打分评估，并批量发送个性化招聘邀请，大幅提升招聘效率。</p>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-q">支持哪些招聘平台？</h3>
+        <p class="faq-a">目前支持两大平台：<strong>Boss直聘</strong>（推荐牛人、关键词搜索、已获取简历收件箱三种模式）和<strong>脉脉</strong>（人脉搜索、企业招聘双模式），共五种自动化运作模式。</p>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-q">支持哪些 AI 模型？</h3>
+        <p class="faq-a">支持市面主流大模型：Claude（Anthropic）、GPT（OpenAI）、DeepSeek、Gemini（Google）、通义千问（阿里）、豆包（字节），以及所有兼容 OpenAI 接口的大模型。使用你自己的 API Key，直接从浏览器发起请求，数据不经过任何中间服务器。</p>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-q">可以自动读取附件简历吗？</h3>
+        <p class="faq-a">可以。在 Boss直聘收件箱模式下，工具会自动点开候选人的附件简历（支持 PDF），提取全文内容交给 AI 做深度分析和匹配评估，无需人工逐一查看。</p>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-q">使用安全吗？会不会被封号？</h3>
+        <p class="faq-a">工具内置仿真操作机制：随机延迟、阅读停顿、发送间隔冷却等，模拟真人操作节奏，降低被平台检测的风险。候选人数据完全在本地浏览器内处理，不上传任何服务器，不存储账号信息，安全可控。建议配合平台规定合理使用，避免单日操作量过大。</p>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-q">如何安装？收费吗？</h3>
+        <p class="faq-a">完全免费。下载 ZIP 文件后解压，在 Chrome 地址栏打开 <code style="background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:3px;">chrome://extensions</code>，打开「开发者模式」，点「加载已解压的扩展程序」选择解压目录即可。整个安装过程约 2 分钟，无需注册账号。</p>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-q">适合哪些人使用？</h3>
+        <p class="faq-a">适合在 Boss直聘或脉脉上有批量招聘需求的 HR、猎头、招聘负责人。尤其适合需要快速筛选大量候选人、逐份查看简历耗时较多的场景。工具可以每天自动处理几十至上百份简历，让 HR 把精力集中在高价值的面试和沟通环节。</p>
+      </div>
+
+    </div>
   </div>
 </section>
 
